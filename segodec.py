@@ -131,9 +131,9 @@ def proc_image(inp: np.ndarray) -> np.ndarray:
 
     # inp = cv.fastNlMeansDenoising(inp, None, 5, 7, 21)
     # inp = cv2.morphologyEx(inp, cv.MORPH_OPEN, kernel)
-    #inp = clahe.apply(inp)
+    np = clahe.apply(inp)
     # morph = cv2.morphologyEx(morph, cv.MORPH_CLOSE, kernel)
-    return apply_brightness_contrast(apply_brightness_contrast(clahe.apply(inp), 100, 80), -100, 100)
+    return apply_brightness_contrast(apply_brightness_contrast(clahe.apply(inp), 90, 80), -100, 100)
 
 
 def determine_segment(img: np.ndarray) -> int:

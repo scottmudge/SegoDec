@@ -41,7 +41,7 @@ Configuration values:
 * `CharSpacing`: A tuple `NumChars-1` long describing the distance between one-char and another in pixels.
 * `SegmentTestPoints`: A set of tuples of (x,y) pixel coordinates for each of the 7 segments, from which a mean pixel value is dervied.
 * `TestWindowSize`: The size of the NxN window from which a mean pixel value is determined for each of the test points described in the line above.
-
+* `UseFuzzy`: This activates a mode which returns the closest-matched digit rather than an exact match. If disabled, if an exact match is not found, "indeterminate" is returned instead of the decoded numbers.
 
 **NOTE**
 

@@ -1,3 +1,12 @@
+""""
+    SecoDec - Simple, effective OCR for seven-segment displays
+
+    Author: Scott Mudge - https://scottmudge.com
+
+    Requires `opencv-python'
+
+"""
+
 import cv2 as cv
 import sys
 import os
@@ -59,6 +68,8 @@ CharStartY = 15
 CharHeight = 143
 CharWidth = 83
 
+# Finds the closest-matched segment rather than exact-match
+UseFuzzy = True
 
 # List of values describing space after each character.
 CharSpacing = (
@@ -108,10 +119,7 @@ def apply_brightness_contrast(input_img, brightness=0, contrast=0):
 
 
 def print_usage():
-    print("Usage: segodec.py [input] [options]")
-    print("\tOptions:")
-    print("\t: #Todo")
-
+    print("Usage: segodec.py [input_img]")
 
 # CORE FUNCTIONS
 # -------------------------------------------------------------------------------
@@ -172,19 +180,38 @@ def determine_segment(img: np.ndarray) -> int:
 
         is_seg_active.append(active)
 
-    for seg_num, mask in enumerate(SegmentMask):
-        if len(is_seg_active) != len(mask):
-            raise ValueError("seg_active size != mask size")
+    if UseFuzzy:
+        digit_confidences = list()
 
-        matched = True
+        # Get confidence for each possible segment
+        for seg_num, mask in enumerate(SegmentMask):
+            if len(is_seg_active) != len(mask):
+                raise ValueError("seg_active size != mask size")
 
-        for x, seg_val in enumerate(mask):
-            if seg_val != is_seg_active[x]:
-                matched = False
-                break
+            match_conf = 0.0
 
-        if matched:
-            return seg_num
+            for x, seg_val in enumerate(mask):
+                if seg_val == is_seg_active[x]:
+                    match_conf += 1.0
+
+            match_conf /= NumSegments
+            digit_confidences.append(match_conf)
+
+        return digit_confidences.index(max(digit_confidences))
+    else:
+        for seg_num, mask in enumerate(SegmentMask):
+            if len(is_seg_active) != len(mask):
+                raise ValueError("seg_active size != mask size")
+
+            matched = True
+
+            for x, seg_val in enumerate(mask):
+                if seg_val != is_seg_active[x]:
+                    matched = False
+                    break
+
+            if matched:
+                return seg_num
     return -1
 
 

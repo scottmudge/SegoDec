@@ -60,3 +60,17 @@ To process and image, all you need to do is run:
 `python3 segodec.py [img]` 
 
 Where `[img]` is the path to the input image. Any standard format used by OpenCV's `imread` should be fine... jpeg, png, bmp, etc.
+
+## Example Images
+
+#### Input Image:
+
+![Input Image](readme/input.jpg)
+
+#### Cropped & Processed:
+
+![Cropped and Processed](readme/processed.jpg)
+
+#### Cut-up Digits:
+
+![First Digit](readme/0.jpg) ![Last Digit](readme/5.jpg)

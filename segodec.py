@@ -1,4 +1,3 @@
-import cv2
 import cv2 as cv
 import sys
 import os
@@ -118,7 +117,7 @@ def load_image(filename: str) -> np.ndarray:
     """Loads and crops image."""
     if not os.path.exists(filename):
         raise FileNotFoundError("Input file not found.")
-    in_img = cv.imread(filename, cv2.IMREAD_GRAYSCALE)
+    in_img = cv.imread(filename, cv.IMREAD_GRAYSCALE)
     return in_img[CropY:CropY + CropH, CropX:CropX + CropW]
 
 

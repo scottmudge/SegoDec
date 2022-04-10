@@ -5,6 +5,8 @@ import os
 import numpy
 import numpy as np
 
+Debug = False
+
 
 RootPath = os.path.dirname(os.path.realpath(__file__))
 Quiet = True
@@ -129,9 +131,9 @@ def proc_image(inp: np.ndarray) -> np.ndarray:
 
     # inp = cv.fastNlMeansDenoising(inp, None, 5, 7, 21)
     # inp = cv2.morphologyEx(inp, cv.MORPH_OPEN, kernel)
-    inp = clahe.apply(inp)
+    #inp = clahe.apply(inp)
     # morph = cv2.morphologyEx(morph, cv.MORPH_CLOSE, kernel)
-    return apply_brightness_contrast(clahe.apply(inp), 50, 100)
+    return apply_brightness_contrast(apply_brightness_contrast(clahe.apply(inp), 100, 80), -100, 100)
 
 
 def determine_segment(img: np.ndarray) -> int:
@@ -197,6 +199,9 @@ def extract_chars(img: numpy.ndarray) -> list:
     if not Quiet:
         print("Processing image...")
     proc = proc_image(img)
+
+    if Debug:
+        cv.imwrite("./dbg_img.jpg", proc)
 
     if len(CharSpacing) < (NumChars -1):
         raise IndexError("Not enough values in CharSpacing")

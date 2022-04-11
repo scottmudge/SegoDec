@@ -22,7 +22,7 @@ I figured that, given the limitations specified above, the actual process of dec
 6. Compare the arrangement of on and off segments against a table of known arrangements.
 7. Return the value of each character based on which digit is matched in the reference table.
 
-This method is much faster and much more reliable than I was ever able to achieve with `ssocer` or other approaches.
+This method is much faster and much more reliable than I was ever able to achieve with `ssocr` or other approaches.
 
 ## Usage
 

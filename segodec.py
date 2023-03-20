@@ -73,7 +73,7 @@ UseFuzzy = True
 
 # List of values describing space after each character.
 CharSpacing = (
-    12, 12, 45, 12, 12
+    12, 12, 50, 12, 12
     )
 
 # A set of points (tuple of (x,y) tuples) for each of the 7 segments
@@ -258,6 +258,14 @@ if __name__ == '__main__':
 
     img = load_image(sys.argv[1])
     chars = extract_chars(img)
+    
+    if Debug:
+        char_dir = "./chars"
+        os.makedirs(char_dir, exist_ok=True)
+        for i, char in enumerate(chars):
+            out_path = f"{char_dir}/{i}.png"
+            cv.imwrite(out_path, char)
+    
     digits = list()
 
     for char in chars:
